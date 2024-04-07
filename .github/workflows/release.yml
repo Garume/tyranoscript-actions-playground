@@ -1,0 +1,24 @@
+on:
+    push:
+        tags:
+            - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  submodules: true
+            - name: test
+              uses: PenguinCabinet/tyranoscript-packager-action@v0.1.21
+              with:
+                  workingdirectory: '.' #プロジェクトがあるパス
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  tag: ${{ github.ref }}
+                  zip_name: 'release.zip'
+                  platform: 'win' #win,mac,linux
+                  title: 'title' #The window title of this game
+                  width: '1920'
+                  height: '1080'
+                  game_name: 'game' #This game name
